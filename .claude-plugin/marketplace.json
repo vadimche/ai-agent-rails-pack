@@ -1,0 +1,18 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "ai-agent-rails-pack",
+  "description": "Lightweight repository-level rails for Codex, Claude Code, Cursor and GenAI coding agents: change intent, invariants, self-checks, handoffs and human approval gates.",
+  "owner": {
+    "name": "AI Agent Rails Pack"
+  },
+  "plugins": [
+    {
+      "name": "agent-rails-core",
+      "source": "./plugins/agent-rails-core",
+      "description": "Core agent workflow rails: cold-start interview, change intent, post-change self-check, agent handoff and context snapshot.",
+      "author": {
+        "name": "AI Agent Rails Pack"
+      }
+    }
+  ]
+}

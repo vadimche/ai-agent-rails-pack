@@ -1,0 +1,8 @@
+{
+  "name": "agent-rails-core",
+  "description": "Core workflow rails for GenAI coding agents.",
+  "version": "0.1.0",
+  "author": {
+    "name": "AI Agent Rails Pack"
+  }
+}
