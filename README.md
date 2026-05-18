@@ -2,6 +2,8 @@
 
 **Practical guardrails for Codex, Claude Code, Cursor and other GenAI coding agents.**
 
+> AI coding agents are fast. That is exactly why they need rails.
+
 AI coding agents are powerful, but without a lightweight workflow they tend to start coding too early, lose intent, touch unrelated files, break invariants, and leave humans with a large diff and weak explanation.
 
 This pack gives teams a small set of repository-level rails:
@@ -33,10 +35,12 @@ templates/change-intent.md         # fill before coding
 templates/invariant-register.md    # system invariants to protect
 templates/rollback-plan.md         # rollback notes
 templates/agent-handoff.md         # handoff between agents/humans
-examples/java-spring/AGENTS.md     # Java/Spring specialization
-examples/vue/AGENTS.md             # Vue frontend specialization
-examples/multi-agent/roles.md      # planner/builder/reviewer roles
-.github/pull_request_template.md   # PR template aligned with the pack
+examples/java-spring/AGENTS.md                  # Java/Spring specialization
+examples/vue/AGENTS.md                          # Vue frontend specialization
+examples/multi-agent/roles.md                   # planner/builder/reviewer roles
+examples/demo-change-email-notification/        # demo: controlled backend change
+examples/demo-change-price-formatting/          # demo: controlled frontend change
+.github/pull_request_template.md                # PR template aligned with the pack
 ```
 
 ## Quick start
@@ -46,6 +50,78 @@ examples/multi-agent/roles.md      # planner/builder/reviewer roles
 3. Before asking an agent to code, create a `change-intent.md` from the template.
 4. Ask the agent to implement only after the change intent is clear.
 5. Before merge, use `docs/human-approval-checklist.md`.
+
+
+## Demo examples
+
+The pack includes two small demos that show the workflow in practice. They are intentionally simple: the goal is not to demonstrate a complex architecture, but to show how a coding agent can be kept inside a clear intent boundary.
+
+### Demo 1: backend change — order confirmation email
+
+Path:
+
+```text
+examples/demo-change-email-notification/
+```
+
+Scenario:
+
+> Add an email notification after successful order placement.
+
+Why this demo matters: this looks like a small feature, but an agent can easily touch order transactions, payment flow, status transitions, or introduce a new mail dependency. The filled Change Intent makes the boundary explicit before coding starts.
+
+Files:
+
+```text
+examples/demo-change-email-notification/task.md
+examples/demo-change-email-notification/change-intent-filled.md
+examples/demo-change-email-notification/agent-self-check.md
+```
+
+Use it like this:
+
+```text
+Read the demo task and filled Change Intent.
+Explain how the Change Intent limits implementation scope.
+Then implement only within that approved boundary.
+After implementation, complete agent-self-check.md.
+```
+
+### Demo 2: frontend change — price formatting
+
+Path:
+
+```text
+examples/demo-change-price-formatting/
+```
+
+Scenario:
+
+> In the Vue product list, show prices with the euro symbol and two decimal places.
+
+Why this demo matters: agents often over-edit frontend code. A formatting task should not change API contracts, store structure, sorting logic, dependency versions, or unrelated layout. The rails make that visible.
+
+Files:
+
+```text
+examples/demo-change-price-formatting/task.md
+examples/demo-change-price-formatting/change-intent-filled.md
+examples/demo-change-price-formatting/agent-self-check.md
+```
+
+Use it like this:
+
+```text
+Read the task and Change Intent.
+Before editing code, list the files you expect to touch and the files you must not touch.
+After implementation, compare the diff against agent-self-check.md.
+```
+
+### What the demos are meant to prove
+
+They do not prove that an AI agent is safe or that code is production-ready. They show a more modest and useful practice:
+
+> make intent, scope, invariants, tests and rollback explicit before giving an agent permission to modify code.
 
 ## Example prompt
 

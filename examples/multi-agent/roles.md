@@ -1,17 +1,44 @@
-# Multi-Agent Roles
+# Multi-Agent Workflow Roles
+
+This is a minimal role split for teams using planner/builder/reviewer agents.
 
 ## Planner
 
-Creates Change Intent, identifies risks, affected files and tests. Does not code.
+Creates the Change Intent. Must not edit production code.
+
+Outputs:
+
+- problem statement;
+- affected modules;
+- non-goals;
+- invariants;
+- test plan;
+- rollback notes.
 
 ## Builder
 
-Implements approved Change Intent. Keeps changes minimal.
+Implements only the approved Change Intent.
+
+Rules:
+
+- do not expand scope silently;
+- reuse existing patterns;
+- update tests/checks;
+- produce a concise change summary.
 
 ## Reviewer
 
-Compares diff against Change Intent and invariants. Reports risks. Does not claim guarantees.
+Checks the diff against the approved Change Intent.
 
-## Human
+Outputs:
 
-Approves intent, reviews risk, owns final merge decision.
+- intent match / mismatch;
+- scope creep;
+- missing tests;
+- invariant risk;
+- rollback clarity;
+- recommendation: approve, revise, or escalate to human.
+
+## Human owner
+
+Owns judgment and final approval. The agents produce structured evidence; they do not own production risk.

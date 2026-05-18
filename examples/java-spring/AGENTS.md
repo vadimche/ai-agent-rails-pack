@@ -1,9 +1,26 @@
 # Java/Spring Agent Instructions
 
-- Preserve package layering: controller -> service/application -> domain -> repository/infrastructure.
-- Do not put business logic in controllers.
-- Do not call repositories directly from controllers.
-- For external calls, use explicit timeout and error handling.
-- Prefer constructor injection.
-- Add or update tests for changed behavior.
-- Do not change database schema without explicit human approval.
+Use these instructions in addition to the root `AGENTS.md` for Java/Spring repositories.
+
+## Boundaries
+
+- Keep controllers thin.
+- Put business rules in services/domain objects, not controllers.
+- Do not bypass repositories or transaction boundaries without explicit approval.
+- Do not introduce new frameworks for small changes.
+
+## Testing
+
+- Prefer focused unit tests for business rules.
+- Add integration tests for persistence, transactions, security configuration and external API boundaries.
+- For risky changes, state which Spring profile/configuration was used for testing.
+
+## Risk gates
+
+Request human approval before changing:
+
+- authentication/authorization;
+- transaction boundaries;
+- database migrations;
+- external payment/order/email integrations;
+- production configuration.
